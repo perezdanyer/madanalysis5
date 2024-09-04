@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  
-//  Copyright (C) 2012-2023 Jack Araz, Eric Conte & Benjamin Fuks
+//  Copyright (C) 2012-2022 Jack Araz, Eric Conte & Benjamin Fuks
 //  The MadAnalysis development team, email: <ma5team@iphc.cnrs.fr>
 //  
 //  This file is part of MadAnalysis 5.
@@ -648,6 +648,23 @@ void DelphesTreeReader::FillEvent(EventFormat& myEvent, SampleFormat& mySample)
     }
   }
 
+  // ---------------------------------------------------------------------------
+  // GenMET
+  // ---------------------------------------------------------------------------
+  if (data_.GenMET_!=0)
+  if (data_.GenMET_->GetEntries()>0)
+  {
+    // getting the first particle
+    MissingET* part = dynamic_cast<MissingET*>(data_.GenMET_->At(0));
+
+    // filling GenMET info
+    if (part!=0)
+    {
+      myEvent.rec()->GenMET_.momentum_.SetPx(part->MET*cos(part->Phi));
+      myEvent.rec()->GenMET_.momentum_.SetPy(part->MET*sin(part->Phi));
+      myEvent.rec()->GenMET_.momentum_.SetE (part->MET);
+    }
+  }
 
   // ---------------------------------------------------------------------------
   // THT

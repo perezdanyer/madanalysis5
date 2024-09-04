@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  
-//  Copyright (C) 2012-2023 Jack Araz, Eric Conte & Benjamin Fuks
+//  Copyright (C) 2012-2022 Jack Araz, Eric Conte & Benjamin Fuks
 //  The MadAnalysis development team, email: <ma5team@iphc.cnrs.fr>
 //  
 //  This file is part of MadAnalysis 5.
@@ -75,6 +75,11 @@ MAbool DelphesMA5tuneTreeReader::Initialize()
   if (branchMissingET_==0)
   {
     WARNING << "MissingEt branch is not found" << endmsg;
+  }
+  branchGenMissingET_ = treeReader_->UseBranch("GenMissingET");
+  if (branchGenMissingET_==0)
+  {
+    WARNING << "GenMissingET branch is not found" << endmsg;
   }
   branchScalarHT_ = treeReader_->UseBranch("ScalarHT");
   if (branchScalarHT_==0)
@@ -446,6 +451,16 @@ void DelphesMA5tuneTreeReader::FillEvent(EventFormat& myEvent, SampleFormat& myS
     myEvent.rec()->MET_.momentum_.SetPx(part->MET*cos(part->Phi));
     myEvent.rec()->MET_.momentum_.SetPy(part->MET*sin(part->Phi));
     myEvent.rec()->MET_.momentum_.SetE(part->MET);
+  }
+
+  // GenMET
+  if (branchGenMissingET_!=0)
+  if (branchGenMissingET_->GetEntries()>0)
+  {
+    GenMissingET* part = dynamic_cast<GenMissingET*>(branchGenMissingET_->At(0));
+    myEvent.rec()->GenMET_.momentum_.SetPx(part->MET*cos(part->Phi));
+    myEvent.rec()->GenMET_.momentum_.SetPy(part->MET*sin(part->Phi));
+    myEvent.rec()->GeenMET_.momentum_.SetE(part->MET);
   }
 
   // THT

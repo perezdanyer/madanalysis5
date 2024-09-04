@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  
-//  Copyright (C) 2012-2023 Jack Araz, Eric Conte & Benjamin Fuks
+//  Copyright (C) 2012-2022 Jack Araz, Eric Conte & Benjamin Fuks
 //  The MadAnalysis development team, email: <ma5team@iphc.cnrs.fr>
 //  
 //  This file is part of MadAnalysis 5.
@@ -52,6 +52,7 @@ DelphesMemoryInterface::DelphesMemoryInterface()
   Photon_       = 0;
   Muon_         = 0;
   MET_          = 0;
+  GenMET_       = 0;
   HT_           = 0;
   GenParticle_  = 0;
   Track_        = 0;
@@ -115,6 +116,7 @@ void DelphesMemoryInterface::Initialize(TFolder* delphesFolder,
   // Official Delphes collections
   //  GenJet_       = GetCollection(delphesFolder,table,"GenJet");
   MET_          = GetCollection(delphesFolder,table,"MissingET");
+  GenMET_       = GetCollection(delphesFolder,table,"GenMissingET");
   Tower_        = GetCollection(delphesFolder,table,"Tower");
   Track_        = GetCollection(delphesFolder,table,"Track");
   HT_           = GetCollection(delphesFolder,table,"ScalarHT");
@@ -143,6 +145,7 @@ void DelphesMemoryInterface::Initialize(TFolder* delphesFolder,
   try
   {
     if (MET_      ==0) throw EXCEPTION_WARNING("Delphes output: MET is not found","",0);
+    if (GenMET_   ==0) throw EXCEPTION_WARNING("Delphes output: GenMET is not found","",0);
     if (Electron_ ==0) throw EXCEPTION_WARNING("Delphes output: Electron collection is not found","",0);
     if (Muon_     ==0) throw EXCEPTION_WARNING("Delphes output: Muon collection is not found","",0);
     if (Photon_   ==0) throw EXCEPTION_WARNING("Delphes output: Photon collection is not found","",0);
@@ -296,6 +299,22 @@ MAbool DelphesMemoryInterface::TransfertDELPHEStoMA5(SampleFormat& mySample, Eve
       MAfloat64 px = metCand->Momentum.Px();
       MAfloat64 py = metCand->Momentum.Py();
       myEvent.rec()->MET().momentum_.SetPxPyPzE(px,py,0,pt);
+    }
+  }
+  // --------------GenMET
+  if (GenMET_!=0)
+  {
+    Candidate* genmetCand = dynamic_cast<Candidate*>(GenMET_->At(0));
+    if (genmetCand==0) 
+    {
+      ERROR << "impossible to access the GenMET" << endmsg;
+    }
+    else
+    {
+      MAfloat64 pt = genmetCand->Momentum.Pt();
+      MAfloat64 px = genmetCand->Momentum.Px();
+      MAfloat64 py = genmetCand->Momentum.Py();
+      myEvent.rec()->GenMET().momentum_.SetPxPyPzE(px,py,0,pt);
     }
   }
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  
-//  Copyright (C) 2012-2023 Jack Araz, Eric Conte & Benjamin Fuks
+//  Copyright (C) 2012-2022 Jack Araz, Eric Conte & Benjamin Fuks
 //  The MadAnalysis development team, email: <ma5team@iphc.cnrs.fr>
 //  
 //  This file is part of MadAnalysis 5.
@@ -51,6 +51,7 @@ struct DelphesDataFormat
   TClonesArray* Photon_;
   TClonesArray* Muon_;
   TClonesArray* MET_;
+  TClonesArray* GenMET_;
   TClonesArray* HT_;
   TClonesArray* GenParticle_;
   TClonesArray* Track_;
@@ -69,6 +70,7 @@ struct DelphesDataFormat
   TBranch* branchPhoton_;
   TBranch* branchMuon_;
   TBranch* branchMET_;
+  TBranch* branchGenMET_;
   TBranch* branchHT_;
   TBranch* branchGenParticle_;
   TBranch* branchTrack_;

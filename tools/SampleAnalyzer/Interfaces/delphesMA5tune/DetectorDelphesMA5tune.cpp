@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  
-//  Copyright (C) 2012-2023 Jack Araz, Eric Conte & Benjamin Fuks
+//  Copyright (C) 2012-2022 Jack Araz, Eric Conte & Benjamin Fuks
 //  The MadAnalysis development team, email: <ma5team@iphc.cnrs.fr>
 //  
 //  This file is part of MadAnalysis 5.
@@ -503,6 +503,27 @@ void DetectorDelphesMA5tune::TranslateDELPHEStoMA5(SampleFormat& mySample, Event
       MAfloat64 px = metCand->Momentum.Px();
       MAfloat64 py = metCand->Momentum.Py();
       myEvent.rec()->MET().momentum_.SetPxPyPzE(px,py,0,pt);
+    }
+  }
+  first_=true;
+
+// GenMET
+  TObjArray* genmetArray  = dynamic_cast<TObjArray*>(
+    delphesFolder_->FindObject("Export/GenMissingET/momentum"));
+  if (genmetArray==0) {if (!first_) WARNING << "GenMET collection is not found" << endmsg;}
+  else
+  {
+    Candidate* genmetCand = dynamic_cast<Candidate*>(genmetArray->At(0));
+    if (metCand==0) 
+    {
+      ERROR << "impossible to access the GenMET" << endmsg;
+    }
+    else
+    {
+      MAfloat64 pt = genmetCand->Momentum.Pt();
+      MAfloat64 px = genmetCand->Momentum.Px();
+      MAfloat64 py = genmetCand->Momentum.Py();
+      myEvent.rec()->GenMET().momentum_.SetPxPyPzE(px,py,0,pt);
     }
   }
   first_=true;

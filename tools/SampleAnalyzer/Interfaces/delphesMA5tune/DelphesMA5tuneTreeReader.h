@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  
-//  Copyright (C) 2012-2023 Jack Araz, Eric Conte & Benjamin Fuks
+//  Copyright (C) 2012-2022 Jack Araz, Eric Conte & Benjamin Fuks
 //  The MadAnalysis development team, email: <ma5team@iphc.cnrs.fr>
 //  
 //  This file is part of MadAnalysis 5.
@@ -71,6 +71,7 @@ class DelphesMA5tuneTreeReader : public TreeReaderBase
   TClonesArray *branchPhoton_;
   TClonesArray *branchMuon_;
   TClonesArray *branchMissingET_;
+  TClonesArray *branchGenMissingET_;
   TClonesArray *branchScalarHT_;
   TClonesArray *branchGenParticle_;
   TClonesArray *branchTrack_;
@@ -122,6 +123,7 @@ class DelphesMA5tuneTreeReader : public TreeReaderBase
     branchPhoton_=0;
     branchMuon_=0;
     branchMissingET_=0;
+    branchGenMissingET_=0;
     branchScalarHT_=0;
     branchGenParticle_=0;
     branchTrack_=0;

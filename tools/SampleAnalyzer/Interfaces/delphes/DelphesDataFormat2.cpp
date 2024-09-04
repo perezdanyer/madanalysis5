@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  
-//  Copyright (C) 2012-2023 Jack Araz, Eric Conte & Benjamin Fuks
+//  Copyright (C) 2012-2022 Jack Araz, Eric Conte & Benjamin Fuks
 //  The MadAnalysis development team, email: <ma5team@iphc.cnrs.fr>
 //  
 //  This file is part of MadAnalysis 5.
@@ -44,6 +44,7 @@ DelphesDataFormat2::DelphesDataFormat2()
   Photon_       = 0;
   Muon_         = 0;
   MET_          = 0;
+  GenMET_       = 0;
   HT_           = 0;
   GenParticle_  = 0;
   Track_        = 0;
@@ -66,6 +67,7 @@ DelphesDataFormat2::~DelphesDataFormat2()
   if (Photon_!=0)       delete Photon_;
   if (Muon_!=0)         delete Muon_;
   if (MET_!=0)          delete MET_;
+  if (GenMET_!=0)       delete GenMET_;
   if (HT_!=0)           delete HT_;
   if (GenParticle_!=0)  delete GenParticle_;
   if (Track_!=0)        delete Track_;

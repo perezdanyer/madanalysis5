@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  
-//  Copyright (C) 2012-2023 Jack Araz, Eric Conte & Benjamin Fuks
+//  Copyright (C) 2012-2022 Jack Araz, Eric Conte & Benjamin Fuks
 //  The MadAnalysis development team, email: <ma5team@iphc.cnrs.fr>
 //  
 //  This file is part of MadAnalysis 5.
@@ -120,6 +120,9 @@ class RecEventFormat
  
   /// Reconstructed Missing Transverse Energy
   RecParticleFormat MET_;
+
+  /// GenLevel Missing Transverse Energy
+  RecParticleFormat GenMET_;
   
   /// Reconstructed Missing Hadronic Transverse Energy
   RecParticleFormat MHT_;
@@ -209,6 +212,9 @@ class RecEventFormat
   /// Accessor to the Missing Transverse Energy (read-only)
   const RecParticleFormat& MET() const {return MET_;}
 
+  /// Accessor to the Gen Missing Transverse Energy (read-only)
+  const RecParticleFormat& GenMET() const {return GenMET_;}
+
   /// Accessor to the Missing Hadronic Transverse Energy (read-only)
   const RecParticleFormat& MHT() const {return MHT_;}
 
@@ -274,6 +280,9 @@ class RecEventFormat
   /// Accessor to the Missing Transverse Energy
   RecParticleFormat& MET() {return MET_;}
 
+  /// Accessor to the Gen Missing Transverse Energy
+  RecParticleFormat& GenMET() {return GenMET_;}
+
   /// Accessor to the Missing Hadronic Transverse Energy
   RecParticleFormat& MHT() {return MHT_;}
 
@@ -329,6 +338,7 @@ class RecEventFormat
     EFlowNeutralHadrons_.clear();
     genjets_.clear();
     MET_.Reset();
+    GenMET_.Reset();
     MHT_.Reset();
     TET_  = 0.;
     THT_  = 0.;
@@ -441,6 +451,9 @@ class RecEventFormat
   /// Giving a pointer to the Missing Transverse Energy
   RecParticleFormat* GetNewMet()
   { return &MET_; }
+
+  RecParticleFormat* GetNewGenMet()
+  { return &GenMET_; }
 
   /// Giving a pointer to the Missing Transverse Energy
   RecParticleFormat* GetNewMht()

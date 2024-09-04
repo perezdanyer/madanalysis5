@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //  
-//  Copyright (C) 2012-2023 Jack Araz, Eric Conte & Benjamin Fuks
+//  Copyright (C) 2012-2022 Jack Araz, Eric Conte & Benjamin Fuks
 //  The MadAnalysis development team, email: <ma5team@iphc.cnrs.fr>
 //  
 //  This file is part of MadAnalysis 5.
@@ -45,6 +45,7 @@ DelphesDataFormat::DelphesDataFormat()
   branchPhoton_       = 0;
   branchMuon_         = 0;
   branchMET_          = 0;
+  branchGenMET_       = 0;
   branchHT_           = 0;
   branchGenParticle_  = 0;
   branchTrack_        = 0;
@@ -60,6 +61,7 @@ DelphesDataFormat::DelphesDataFormat()
   Photon_       = 0;
   Muon_         = 0;
   MET_          = 0;
+  GenMET_       = 0;
   HT_           = 0;
   GenParticle_  = 0;
   Track_        = 0;
@@ -84,6 +86,7 @@ DelphesDataFormat::~DelphesDataFormat()
   if (Photon_!=0)       delete Photon_;
   if (Muon_!=0)         delete Muon_;
   if (MET_!=0)          delete MET_;
+  if (GenMET_!=0)       delete GenMET_;
   if (HT_!=0)           delete HT_;
   if (GenParticle_!=0)  delete GenParticle_;
   if (Track_!=0)        delete Track_;
@@ -109,6 +112,7 @@ MAbool DelphesDataFormat::GetEntry(MAint64 treeEntry)
   if (branchPhoton_!=0)       test &= (branchPhoton_       -> GetEntry(treeEntry) >=0);
   if (branchMuon_!=0)         test &= (branchMuon_         -> GetEntry(treeEntry) >=0);
   if (branchMET_!=0)          test &= (branchMET_          -> GetEntry(treeEntry) >=0);
+  if (branchGenMET_!=0)       test &= (branchGenMET_       -> GetEntry(treeEntry) >=0);
   if (branchHT_!=0)           test &= (branchHT_           -> GetEntry(treeEntry) >=0);
   if (branchGenParticle_!=0)  test &= (branchGenParticle_  -> GetEntry(treeEntry) >=0);
   if (branchTrack_!=0)        test &= (branchTrack_        -> GetEntry(treeEntry) >=0);
@@ -133,6 +137,7 @@ void DelphesDataFormat::InitializeData()
   InitializeData(branchWeight_,       Weight_);
   InitializeData(branchGenParticle_,  GenParticle_);
   InitializeData(branchMET_,          MET_);
+  InitializeData(branchGenMET_,       GenMET_);
   InitializeData(branchTower_,        Tower_);
   InitializeData(branchTrack_,        Track_);
   InitializeData(branchVertex_,       Vertex_);
@@ -170,6 +175,7 @@ void DelphesDataFormat::InitializeBranch(TTree* tree)
   branchWeight_       = tree->GetBranch("Weight");
   branchGenParticle_  = tree->GetBranch("Particle");
   branchMET_          = tree->GetBranch("MissingET");
+  branchGenMET_       = tree->GetBranch("GenMissingET");
   branchTower_        = tree->GetBranch("Tower");
   branchTrack_        = tree->GetBranch("Track");
   branchVertex_       = tree->GetBranch("Vertex");
@@ -209,6 +215,7 @@ void DelphesDataFormat::InitializeBranch(TTree* tree)
   {
     if (branchEvent_       ==0) throw EXCEPTION_WARNING("Event branch is not found","",0);
     if (branchMET_         ==0) throw EXCEPTION_WARNING("MET branch is not found","",0);
+    if (branchGenMET_      ==0) throw EXCEPTION_WARNING("GenMET branch is not found","",0);
     if (branchGenParticle_ ==0) throw EXCEPTION_WARNING("GenParticle branch is not found","",0);
     if (branchElectron_    ==0) throw EXCEPTION_WARNING("Electron collection branch is not found","",0);
     if (branchMuon_        ==0) throw EXCEPTION_WARNING("Muon collection branch is not found","",0);
